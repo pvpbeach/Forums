@@ -1,0 +1,123 @@
+.DARK_RED {
+    color: #aa0000 !important;
+}
+
+.BLUE {
+    color: #5555FF !important;
+}
+
+.RED {
+    color: #AA0000 !important;
+}
+
+.CYAN {
+    color: #00AAAA !important;
+}
+
+.YELLOW {
+    color: #F6BE00 !important;
+}
+
+.DARK_GREEN {
+    color: #00AA00 !important;
+}
+
+.LIGHT_PURPLE {
+    color: #FF55FF !important;
+}
+
+.LIGHT_RED {
+    color: #FF5555 !important;
+}
+
+.DARK_PURPLE {
+    color: #AA00AA !important;
+}
+
+
+.true {
+    font-style: italic !important;
+}
+
+
+
+
+
+
+.bg-DARK_RED {
+    background: #aa0000 !important;
+    color: white !important;
+}
+
+.bg-BLUE {
+    background: #5555FF !important;
+    color: white !important;
+
+}
+
+.bg-RED {
+    background: #FF5555 !important;
+    color: white !important;
+}
+
+.bg-CYAN {
+    background: #00AAAA !important;
+}
+
+.bg-YELLOW {
+    background: #FFFF55 !important;
+}
+
+
+
+.tcolor-DARK_RED {
+    color: white !important;
+}
+
+.tcolor-BLUE {
+    color: white !important;
+
+}
+
+.tcolor-RED {
+    color: white !important;
+}
+
+
+
+
+
+
+.media-section {
+    padding: 0 0 15px
+}
+
+.media-section .block {
+    padding-top: 0 !important;
+    padding-bottom: 9px !important;
+    border-radius: 5px 5px 0 0 !important;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, .2);
+    box-shadow: 0 0 1px 1px rgba(255, 255, 255, .32) inset, 0 -15px 15px rgba(0, 0, 0, .05) inset;
+    border: 1px solid rgba(0, 0, 0, .1);
+
+}
+
+.media-section .block h2 {
+    background-repeat: repeat-x;
+    font-size: 12px;
+    color: #fff;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, .2);
+    box-shadow: 0 0 1px 1px rgba(255, 255, 255, .32) inset, 0 -15px 15px rgba(0, 0, 0, .05) inset;
+    border: 1px solid rgba(0, 0, 0, .1);
+    border-radius: 5px 5px 0 0 !important;
+    margin: 0 -20px 27px;
+    padding: 5px;
+}
+
+.shittyshit {
+    font-weight: bolder;
+    letter-spacing: 3.5px;
+}

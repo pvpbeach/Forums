@@ -1,0 +1,18 @@
+/**
+ * Home Page Stylesheet for Fynda.
+ * Copyright (C) 2020 Hydrogen.
+ */
+
+ .header {
+    padding-top: 100px;
+    padding-bottom: 100px;
+    background: url('/img/bg.png');
+    background-position-y: -1px;
+}
+
+.announce-title {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    background: rgb(37, 193, 255);
+    text-align: center;
+}

@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title><%= user.username %>'s <%= config[ticket.type].name %> &mdash; MineRIP Network</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.2/css/bulma.min.css">
+    <link rel="stylesheet" href="/css/global.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <link href="/css/flash.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.3/pace.min.js"></script>
+</head>
+<body>
+<%- include('../partials/Navbar.ejs') %>
+
+<div class="container content">
+    <div class="columns">
+        <div class="column is-one-quarter">
+            <aside>
+                <div class="box">
+                    <h1 class="title is-5">Ticket Information</h1>
+                    <hr>
+                    <p class="subtitle">
+                        <strong>Category</strong> <%= config[ticket.type].name %>
+                        <br> <strong>Created</strong> <span data-tooltip="<%= moment(ticket.date).format('Do of MMMM YYYY, HH:ss A'); %>"><%= moment(ticket.date).fromNow() %></span>
+                    </p>
+                </div>
+
+                <% if (req.user.uuid === ticket.author && !(replyObj && Object.keys(replyObj).length !== 0 && !ticket.reply['_'])) { %>
+                    <div class="box">
+                        <h1 class="title is-5">Ticket Controls</h1>
+                        <hr>
+                        <div class="buttons">
+                            <a href="/support/delete/<%= req.params.id %>" class="button is-danger">
+                                <span style="padding-right: 5px;">
+                                    <i class="fas fa-trash"></i>
+                                </span>
+                                <span>Delete</span>
+                            </a>
+                            <a href="/support/edit/<%= req.params.id %>" class="button is-link">
+                                <span style="padding-right: 5px;">
+                                    <i class="fas fa-pencil-alt"></i>
+                                </span>
+                                <span>Edit</span>
+                            </a>
+                        </div>
+                    </div>
+                <% } %>
+
+                <% if (rankcfg.ranks.find(r => r.id === req.user.rank).permissions.includes('TICKETS_ADMIN') || rankcfg.ranks.find(r => r.id === req.user.rank).permissions.includes('TICKETS_MODERATE') || rankcfg.ranks.find(r => r.id === req.user.rank).permissions.includes('*')) { %>
+                    <div class="box">
+                        <h1 class="title is-5">Ticket Moderation</h1>
+                        <hr>
+                        <div class="buttons">
+                            <a href="/support/delete/<%= req.params.id %>" class="button is-danger" <% if (replyObj.replied === null) { %> style="display: none;" <% } %>>
+                                <span style="padding-right: 5px;">
+                                    <i class="fas fa-trash"></i>
+                                </span>
+                                <span>Delete</span>
+                            </a>
+                            <a class="button is-primary" <% if (replyObj && Object.keys(replyObj).length !== 0 && !ticket.reply['_']) { %>disabled aria-disabled="true" data-tooltip="This ticket has already recieved a reply." <% } else { %>href="/support/reply/<%= ticket._id %>"<% } %>>
+                                <span style="padding-right: 5px;">
+                                    <i class="fas fa-paper-plane"></i>
+                                </span>
+                                <span>Reply</span>
+                            </a>
+                        </div>
+                    </div>
+                <% } %>
+            </aside>
+        </div>
+        <div class="column is-three-quarters">
+            <h1 class="title is-2"><%= user.username %>'s <%= config[ticket.type].name %></h1>
+
+            <% for (var index in ticket.fields) { %>
+                <br>
+
+                <label for="" class="label"><%= ticket.fields[index].question %></label>
+                <p><p class="subtitle"><%- ticket.fields[index].body %></p></p>
+            <% } %>
+            <% if (replyObj && Object.keys(replyObj).length !== 0 && !ticket.reply['_']) { %>
+                <hr>
+                <div class="reply">
+                    <div class="columns">
+                        <div class="column is-1">
+                            <img draggable="false" src="https://visage.surgeplay.com/head/512/<%= replyObj.replied.uuid %>" alt="staff" style="width: 64px !important;">
+                        </div>
+                        <div class="column is-11">
+                            <p>
+                                <span><strong><a href="/profile/<%= replyObj.replied.username %>"><%= replyObj.replied.username %></a></strong> <span data-tooltip="<%= moment(ticket.reply.date).format('Do of MMMM YYYY, HH:ss A') %>"><%= moment(ticket.reply.date).fromNow() %></span> <span class="tag"><%= replyObj.tag %></span></span>
+                                <br> <div style="margin: 0; padding: 0;"><%- replyObj.body.replace('<p>', '').replace('</p>', '') %></div>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            <% } %>
+        </div>
+    </div>
+</div>
+
+<script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+</body>
+</html>

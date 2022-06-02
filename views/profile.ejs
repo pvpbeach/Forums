@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title><%= user.username %>'s Profile &mdash; MineRIP Network</title>
+    <meta name="theme-color" content="#FFD700" />
+    <meta property="og:image" content="https://cdn.discordapp.com/attachments/871795400225480734/900590560853774346/logo_png_1.png">
+    <link rel="icon" type="image/png" sizes="1500x1500" href="https://cdn.discordapp.com/attachments/871795400225480734/900590560853774346/logo_png_1.png">
+    <meta name="title" content="MineRIP Official Forums">
+    <meta name="og:title" content="MineRIP Official Forums">
+    <meta name="twitter:title" content="MineRIP Official Forums">   
+    <meta name="description" content="The official website of the MineRIP Network." />
+    <meta property="og:description" content="The official website of the MineRIP Network." />
+    <meta property="twitter:description" content="The official website of the MineRIP Network." />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.2/css/bulma.min.css">
+    <link rel="stylesheet" href="/css/global.css">
+    <link rel="stylesheet" href="/css/home.css">
+    <link rel="stylesheet" href="/css/staff.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <link href="/css/flash.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.3/pace.min.js"></script>
+</head>
+<body style="height: 100vh;">
+<%- include('./partials/Navbar.ejs') %>
+
+<div class="container">
+    <div class="box header coolio has-text-centered">
+        <h1 class="title is-1" style="color:white;">
+            <strong style="font-weight: 800;">
+                <%= user.username %>
+                <% if (user.blacklisted) { %>
+                    <span style="font-weight: bolder;" class="tag is-large subtitle is-danger">Blacklisted</span>
+                <% } else if (user.banned) { %>
+                    <span style="font-weight: bolder;" class="tag is-large subtitle is-danger">Banned</span>
+                <% } else { %>
+                    <span style="font-weight: bolder;" class="tag is-large subtitle bg-<%= ranks.ranks.find(r => r.id === user.rank).color %> <%= ranks.ranks.find(r => r.id === user.rank).italics %>"><%= ranks.ranks.find(r => r.id === user.rank).name %></span>
+
+                <% } %>
+            </strong>
+        </h1>
+    </div>
+    <br>
+    <div class="columns">
+        <div class="column is-one-third">
+            <aside id="sidebar">
+                <div class="box has-text-centered">
+                    <img draggable="false" class="user-pfp-<%= user.online %>" src="https://visage.surgeplay.com/bust/168/<%= user.uuid %>" alt="shit" width="168" height="168">
+                    <h1 class="title is-3"><%= user.username %>
+                    </h1>
+                    <p class="subtitle">
+                        <% if (!user.online) { %>
+                            Last seen <strong><span data-tooltip="<%= moment(user.lastLogin).format('Do of MMMM YYYY, HH:ss A') %>"><%= moment(user.lastLogin).fromNow() %></span></strong> <br>on <strong><%= user.lastServer %></strong>
+                        <% } else { %>
+                            Currently online on <strong><%= user.lastServer %></strong>
+                        <% } %>
+                    </p>
+                </div>
+                <% if (user.connections.length > 0) { %>
+                <div class="box has-text-centered">
+                    <% for (var index in user.connections) { %>
+                        <a class="connection" style="font-size: 30pt;" href="https://<%= user.connections[index].url %>"><i class="fab fa-<%= user.connections[index].service %>"></i></a>
+                    <% } %>
+                </div>
+                <% } %>
+                <% if (req.isAuthenticated() && req.user.uuid == user.uuid) { %>
+                <a href="/settings" class="button is-block is-link">
+                    <span>
+                        <i class="fas fa-cogs"></i>
+                    </span>
+                    <span>Settings</span>
+                </a>
+                <% } %>
+            </aside>
+        </div>
+        <div class="column is-two-thirds">
+            <div class="box">
+                <h1 class="title is-2">Statistics</h1>
+                <p class="subtitle">This feature is coming soon.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+</body>
+</html>

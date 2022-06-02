@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Panel &mdash; MineRIP Network</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.2/css/bulma.min.css">
+    <link rel="stylesheet" href="/css/global.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <link href="/css/flash.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.3/pace.min.js"></script>
+</head>
+<body>
+<%- include('../partials/Navbar.ejs') %>
+
+<div class="content">
+    <div class="container">
+        <div class="columns">
+            <div class="column is-2">
+                <aside class="menu">
+                    <ul class="menu-list" >
+                        <li><a class="is-active">Main Page</a></li>
+                    </ul>
+                    <p class="menu-label">
+                        Moderation
+                    </p>
+                    <ul class="menu-list">
+                        <li><a href="/panel/tickets">Tickets</a></li>
+                    </ul>
+                    <p class="menu-label">
+                        Administration
+                    </p>
+                    <ul class="menu-list">
+                        <li><a href="/panel/news">News</a></li>
+                    </ul>
+                    <p class="menu-label">
+                        Maintainer
+                    </p>
+                    <ul class="menu-list">
+                        <li><a href="/panel/restart">Restart <span class="tag is-warning">!</span></a></li>
+                    </ul>
+                </aside>
+            </div>
+            <div class="column is-10">
+                <h1 class="title is-2">Staff Panel</h1>
+                <p class="subtitle">
+                    This is the MineRIP Network staff panel. Leaking of this page can result in demotion!
+                    <br> Tabs will appear to the left depending on your rank.
+                </p>
+                <hr>
+                <small>&copy; 2021 Bunni and Dannington. All rights reserved.</small>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+</body>
+</html>

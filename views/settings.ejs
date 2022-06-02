@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Settings &mdash; MineRIP Network</title>
+    <meta name="theme-color" content="#FFD700" />
+    <meta property="og:image" content="https://cdn.discordapp.com/attachments/871795400225480734/900590560853774346/logo_png_1.png">
+    <link rel="icon" type="image/png" sizes="1500x1500" href="https://cdn.discordapp.com/attachments/871795400225480734/900590560853774346/logo_png_1.png">
+    <meta name="title" content="MineRIP Official Forums">
+    <meta name="og:title" content="MineRIP Official Forums">
+    <meta name="twitter:title" content="MineRIP Official Forums">   
+    <meta name="description" content="The official website of the MineRIP Network." />
+    <meta property="og:description" content="The official website of the MineRIP Network." />
+    <meta property="twitter:description" content="The official website of the MineRIP Network." />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.2/css/bulma.min.css">
+    <link rel="stylesheet" href="/css/global.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <link href="/css/flash.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.3/pace.min.js"></script>
+</head>
+<body style="height: 100vh;">
+<%- include('./partials/Navbar.ejs') %>
+
+<div class="container content">
+    <div class="settings">
+        <div class="columns">
+            <div class="column is-7">
+                <div class="box">
+                    <h1 class="title is-2 has-text-centered">
+                        <span>
+                            <i class="fas fa-cogs"></i>
+                        </span>
+                        <span>Account Settings</span>
+                    </h1>
+                    <hr>
+                    <h1 class="title is-4">Connections</h1>
+                    <form method="POST" action="/api/v1/connections">
+                        <p class="control has-icons-left">
+                            <input value="<%= getConnection(req, 'twitch') %>" name="twitch" style="font-family: 'Raleway', serif !important;" type="text" class="input" placeholder="twitch.tv/...">
+                            <span class="icon is-small is-left"><i class="fab fa-twitch"></i></span>
+                        </p>
+                        <p class="control has-icons-left">
+                            <input value="<%= getConnection(req, 'twitter') %>" name="twitter" style="font-family: 'Raleway', serif !important;" type="text" class="input" placeholder="twitter.com/...">
+                            <span class="icon is-small is-left"><i class="fab fa-twitter"></i></span>
+                        </p>
+                        <p class="control has-icons-left">
+                            <input  value="<%= getConnection(req, 'github') %>" name="github" style="font-family: 'Raleway', serif !important;" type="text" class="input" placeholder="github.com/...">
+                            <span class="icon is-small is-left"><i class="fab fa-github"></i></span>
+                        </p>
+                        <p class="control has-icons-left">
+                            <input  value="<%= getConnection(req, 'youtube') %>" name="youtube" style="font-family: 'Raleway', serif !important;" type="text" class="input" placeholder="youtube.com/...">
+                            <span class="icon is-small is-left"><i class="fab fa-youtube"></i></span>
+                        </p>
+                        <p class="control has-icons-left">
+                            <input value="<%= getConnection(req, 'reddit') %>" name="reddit" style="font-family: 'Raleway', serif !important;" type="text" class="input" placeholder="reddit.com/u/...">
+                            <span class="icon is-small is-left"><i class="fab fa-reddit"></i></span>
+                        </p>
+                        <button class="button is-block is-success" style="font-weight: bolder; letter-spacing: 1.2px; font-family: 'Raleway', serif !important;">SAVE</button>
+                    </form>
+
+                    <hr>
+                    <h1 class="title is-4">Syncing</h1>
+                    <a href="/sync/name" class="button is-black is-block">Force name sync with Mojang</a>
+                    <div style="padding-top: 5px;"></div>
+                    <a href="/sync/rank" class="button is-black is-block">Force rank sync</a>
+                </div>
+            </div>
+            <div class="column is-5">
+                <div class="box">
+                    <h1  class="title is-2 has-text-centered">
+                        <span>
+                            <i class="fas fa-user-shield"></i>
+                        </span>
+                        <span>Security & Privacy</span>
+                    </h1>
+                    <hr>
+                    <h1 class="title is-4">Change your password</h1>
+                    <form action="/auth/password" method="GET">
+                        <p class="control has-icons-left">
+                            <input required name="current" style="font-family: 'Raleway', serif !important;" type="password" class="input" placeholder="Your current password">
+                            <span class="icon is-small is-left"><i class="fas fa-fingerprint"></i></span>
+                        </p>
+                        <p class="control has-icons-left">
+                            <input required name="new" style="font-family: 'Raleway', serif !important;" type="password" class="input" placeholder="Your new password">
+                            <span class="icon is-small is-left"><i class="fas fa-key"></i></span>
+                        </p>
+                        <p class="control has-icons-left">
+                            <input required name="new2" style="font-family: 'Raleway', serif !important;" type="password" class="input" placeholder="Confirm your new password">
+                            <span class="icon is-small is-left"><i class="fas fa-key"></i></span>
+                        </p>
+                        <button class="button is-block is-success" style="font-weight: bolder; letter-spacing: 1.2px; font-family: 'Raleway', serif !important;">SAVE</button>
+                    <h1 class="title is-4">Setup Two-Factor Authentication</h1>
+                    <form action="/auth/2fa" method="POST">
+                        <p class="control has-icons-left">
+                            <% if (typeof req.user.twoFactor !== "object") { %>
+                                <div class="TOTP-QR-Container">
+                                    <img src="<%= tfaRequest.qr %>" alt="2FA QR Code" style="margin-top: 1%; margin-bottom: 5%;">
+                                </div>
+                            <% } %>
+                            2FA is <b>not enabled</b>. If you do not have a QR code scanner in your 2FA app, use the secret below:
+                            <br> <code><%= tfaRequest.secret %></code> 
+                            <div style="margin-bottom: 5%;"></div>
+                            <input required name="current" style="font-family: 'Raleway', serif !important;" type="2fa" class="input" placeholder="testicular cancer here">
+                            <span class="icon is-small is-left"><i class="fas fa-fingerprint"></i></span>
+                        </p>
+                        <button class="button is-block is-success" style="font-weight: bolder; letter-spacing: 1.2px; font-family: 'Raleway', serif !important;">SAVE</button>
+                    </form>
+
+                </div>
+                <div class="box">
+                    <h1 class="title is-2 has-text-centered">
+                        <span>
+                            <i class="fas fa-server"></i>
+                        </span>
+                        <span>Data Management</span>
+                    </h1>
+
+                    <a href="/data/request" class="button is-link is-block">Request your data</a>
+                    <br>
+                    <div class="columns">
+                        <div class="column">
+                            <a href="/data/disable" class="button is-warning is-block">Disable your account</a>
+                        </div>
+                        <div class="column">
+                            <a href="/data/delete" class="button is-danger is-block">Delete your account</a>
+                        </div>
+                    </div>
+                </div>
+                <a href="/auth/logout" class="button is-warning is-block">Log out</a>
+            </div>
+        </div>
+
+        <br>
+    </div>
+</div>
+
+<script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+</body>
+</html>

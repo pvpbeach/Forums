@@ -1,0 +1,285 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<nav class="navbar" role="navigation" aria-label="main navigation" >
+    <style>
+        /*the container must be positioned relative:*/
+        .autocomplete {
+            position: relative;
+            display: inline-block;
+        }
+
+        .autocomplete-items {
+            position: absolute;
+            border: 1px solid #d4d4d4;
+            border-bottom: none;
+            border-top: none;
+            z-index: 99;
+            /*position the autocomplete items to be the same width as the container:*/
+            top: 100%;
+            left: 0;
+            right: 0;
+        }
+
+        .autocomplete-items div {
+            padding: 10px;
+            cursor: pointer;
+            background-color: #fff;
+            border-bottom: 1px solid #d4d4d4;
+        }
+
+        /*when hovering an item:*/
+        .autocomplete-items div:hover {
+            background-color: #e9e9e9;
+        }
+
+        /*when navigating through the items using the arrow keys:*/
+        .autocomplete-active {
+            background-color: DodgerBlue !important;
+            color: #ffffff;
+        }
+    </style>
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="/">
+                <strong style="font-weight: 700; color: black;">MineRIP Network</strong>
+            </a>
+
+            <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+            </a>
+        </div>
+
+        <div id="navbarBasicExample" class="navbar-menu">
+            <div class="navbar-start">
+
+                <a class="navbar-item" href="/staff">
+                    <span>
+                        <i class="fa-solid fa-users"></i>
+                    </span>
+                    <span style="padding-left: 4px;">Staff</span>
+                </a>
+                <!-- Make Route for Royalities -->
+                <a class="navbar-item" href="/royalties"> 
+                    <span>
+                        <i class="fa-solid fa-crown"></i>
+                    </span>
+                    <span style="padding-left: 4px;">Royalties</span>
+                </a>
+                <a class="navbar-item" href="/creators">
+                    <span>
+                        <i class="fa-solid fa-clapperboard"></i>
+                    </span>
+                    <span style="padding-left: 4px;">Creators</span>
+                </a>
+                <a class="navbar-item" href="/support">
+                    <span>
+                        <i class="fa-solid fa-bell-concierge"></i>
+                    </span>
+                    <span style="padding-left: 4px;">Support</span>
+                </a>
+                <!-- <a class="navbar-item" href="https://store.mine.rip">
+                    <span>
+                        <i style="font-size: 10pt;" class="material-icons">shopping_cart</i>
+                    </span>
+                    <span style="padding-left: 4px;">Store</span>
+                </a>
+                <a class="navbar-item" href="https://twitter.com/PlayMineRIP">
+                    <span>
+                        <i style="font-size: 10pt;" class="fab fa-twitter">t</i>
+                    </span>
+                    <span style="padding-left: 4px;">Twitter</span>
+                </a> -->
+                <!-- <a class="navbar-item" href="https://discord.mine.rip/">
+                    <span>
+                        <i style="font-size: 10pt;" class="fab fa-discord"></i>
+                    </span>
+                    <span style="padding-left: 4px;">Discord</span>
+                </a> -->
+                <!-- <a class="navbar-item" href="#" onclick="CopyToClipboard('mine.rip');return false;"">
+                    <script>
+                        function CopyToClipboard(id)
+                        {
+                        var r = document.createRange();
+                        r.selectNode(document.getElementById(id));
+                        window.getSelection().removeAllRanges();
+                        window.getSelection().addRange(r);
+                        document.execCommand('copy');
+                        window.getSelection().removeAllRanges();
+                        }
+                        </script>
+                    <span>
+                        <i style="font-size: 10pt;" class="icon-minecraft">t</i>
+                    </span>
+                    <span style="padding-left: 4px;">Copy IP</span>
+                </a> -->
+                <!-- <a class="navbar-item" href="/support">
+                    <span>
+                        <i style="font-size: 10pt;" class="material-icons">support</i>
+                    </span>
+                    <span style="padding-left: 4px;">Support</span>
+                </a>
+
+                <a class="navbar-item" href="/staff">
+                    <span>
+                        <i style="font-size: 10pt;" class="material-icons">people_alt</i>
+                    </span>
+                    <span style="padding-left: 4px;">Staff</span>
+                </a>
+
+                <a class="navbar-item" href="/creators">
+                    <span>
+                        <i style="font-size: 10pt;" class="fab fa-youtube"></i>
+                    </span>
+                    <span style="padding-left: 4px;">Creators</span>
+                </a>
+
+                <a class="navbar-item" href="/client">
+                    <span>
+                        <i style="font-size: 10pt;" class="fas fa-gamepad"></i>
+                    </span>
+                    <span style="padding-left: 4px;">Client</span>
+                </a> -->
+
+                <!-- <a class="navbar-item" href="/leaderboards">
+                    <span>
+                        <i style="font-size: 10pt;" class="far fa-id-card"></i>
+                    </span>
+                    <span style="padding-left: 4px;">Leaderboards</span>
+                </a> -->
+
+                <!-- <a class="navbar-item" href="https://store.mine.rip">
+                    <span>
+                        <i style="font-size: 10pt;" class="material-icons">shopping_cart</i>
+                    </span>
+                    <span style="padding-left: 4px;">Store</span>
+                </a> -->
+            </div>
+
+            <div class="navbar-end">
+                <% if (req.isAuthenticated() && (req.user.rank !== 'Default' || req.user.rank !== 'vip' || req.user.rank !== 'mvp' || req.user.rank !== 'pro' || req.user.rank !== 'epic' || req.user.rank !== 'high roller' || req.user.rank !== 'king' || req.user.rank !== 'queen' || req.user.rank !== 'miner')) { %>
+                    <a class="navbar-item" href="/panel">
+                        <span>
+                            <i style="font-size: 10pt;" class="material-icons">build</i>
+                        </span>
+                    </a>
+                <% } %>
+                <div class="navbar-item">
+                    <p class="control has-icons-left" style="padding-right: 10px;">
+                        <input id="search" style="font-family: Raleway, serif;" class="input is-small is-rounded" type="text" placeholder="search...">
+                        <span class="icon is-small is-left">
+                            <i class="fas fa-search"></i>
+                        </span>
+                    </p>
+                    <div class="buttons">
+                        <% if (!req.isAuthenticated()) { %>
+                        <a href="/auth/register" class="button is-primary is-small is-rounded">
+                            <strong>Sign up</strong>
+                        </a>
+                        <a href="/auth/login" class="button is-light is-small is-rounded">
+                            Log in
+                        </a>
+                        <% } else { %>
+                        <a style="-webkit-transform: scaleX(-1); transform: scaleX(-1);" href="/profile/<%= req.user.username %>">
+                            <img draggable="false" src="https://visage.surgeplay.com/head/512/<%= req.user.uuid %>" alt="aa">
+                        </a>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<script>
+    let bruh = document.getElementById('search');
+    bruh.addEventListener('keypress', async event => {
+       if (event.keyCode == 13) {
+           window.location.href = `/profile/${bruh.value}`;
+       }
+    });
+</script>
+
+<script>
+    function autocomplete(inp, arr) {
+        var currentFocus;
+        inp.addEventListener("input", function(e) {
+            var a, b, i, val = this.value;
+
+            closeAllLists();
+            if (!val) { return false;}
+            currentFocus = -1;
+
+            a = document.createElement("DIV");
+            a.setAttribute("id", this.id + "autocomplete-list");
+            a.setAttribute("class", "autocomplete-items");
+
+            this.parentNode.appendChild(a);
+
+            for (i = 0; i < arr.length; i++) {
+                if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+                    b = document.createElement("DIV");
+                    b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
+                    b.innerHTML += arr[i].substr(val.length);
+                    b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
+
+                    b.addEventListener("click", function(e) {
+                        inp.value = this.getElementsByTagName("input")[0].value;
+                        closeAllLists();
+                    });
+
+                    a.appendChild(b);
+                }
+            }
+        });
+
+        inp.addEventListener("keydown", function(e) {
+            var x = document.getElementById(this.id + "autocomplete-list");
+            if (x) x = x.getElementsByTagName("div");
+
+            if (e.keyCode === 40) {
+                currentFocus++;
+                addActive(x);
+            } else if (e.keyCode === 38) {
+                currentFocus--;
+                addActive(x);
+            } else if (e.keyCode === 13) {
+                if (currentFocus > -1) if (x) x[currentFocus].click();
+            }
+        });
+
+        function addActive(x) {
+            if (!x) return false;
+
+            removeActive(x);
+            if (currentFocus >= x.length) currentFocus = 0;
+            if (currentFocus < 0) currentFocus = (x.length - 1);
+
+            x[currentFocus].classList.add("autocomplete-active");
+        }
+        function removeActive(x) {
+            for (var i = 0; i < x.length; i++) {
+                x[i].classList.remove("autocomplete-active");
+            }
+        }
+        function closeAllLists(elmnt) {
+            var x = document.getElementsByClassName("autocomplete-items");
+            for (var i = 0; i < x.length; i++) {
+                if (elmnt != x[i] && elmnt != inp) {
+                    x[i].parentNode.removeChild(x[i]);
+                }
+            }
+        }
+
+        document.addEventListener("click", function (e) {
+            closeAllLists(e.target);
+        });
+    }
+
+    let array = [];
+    fetch("/api/v1/autocomplete").then(res => res.json()).then(async res => {
+        array = res.usernames;
+        autocomplete(document.getElementById("search"), array);
+    });
+</script>
+

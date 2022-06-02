@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Create a ticket &mdash; MineRIP Network</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.2/css/bulma.min.css">
+    <link rel="stylesheet" href="/css/global.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <script>
+        function createEditors() {
+            for (const el in document.getElementsByClassName("editorinstance")) {
+                ClassicEditor.create(document.getElementsByClassName("editorinstance")[el])
+                        .catch(console.error);
+            }
+        }
+    </script>
+
+    <link href="/css/flash.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.3/pace.min.js"></script>
+</head>
+<body onload="createEditors();">
+<%- include('../partials/Navbar.ejs') %>
+
+<div class="container content">
+    <h1 class="title is-1">Create a ticket</h1>
+    <hr>
+    <form action="/support/create/<%= req.params.id %>" class="form" method="POST">
+        <% for (var index in config[req.params.id].fields) { %>
+            <div class="block">
+                <label class="label"><%= config[req.params.id].fields[index].label %></label>
+                <% if (config[req.params.id].fields[index].type == 'ShortText') { %>
+                    <input name="short##<%= config[req.params.id].fields[index].label %>" type="text" class="input" placeholder="<%= config[req.params.id].fields[index].placeholder %>">
+                    <br>
+                <% } else if (config[req.params.id].fields[index].type == 'Number') { %>
+                    <input name="num##<%= config[req.params.id].fields[index].label %>" type="number" class="input" placeholder="<%= config[req.params.id].fields[index].placeholder %>">
+                    <br>
+                <% } else { %>
+                    <textarea class="editorinstance" name="rich##<%= config[req.params.id].fields[index].label %>" id="editor-<%= config[req.params.id].fields[index].label %>"></textarea>
+                <% } %>
+                <br>
+            </div>
+        <% } %>
+        <button type="submit" class="button is-link is-fullwidth">
+            <span><i class="fas fa-check"></i></span>
+            <span style="padding-left: 4px;">Submit</span>
+        </button>
+    </form>
+</div>
+
+<script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+<script src="https://cdn.ckeditor.com/ckeditor5/24.0.0/classic/ckeditor.js"></script>
+</body>
+</html>
