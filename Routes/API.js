@@ -118,12 +118,12 @@ router.post('/v1/updaterank', async (req, res) => {
             const exists = await User.exists({ uuid: req.query.uuid });
             if (!exists) { res.send('invalid'); return; }
 
-            if(!configa.ranks.includes(req.query.ranks)) {
-                res.send('invalid rank retard (cope)');
-                return;
-            }
+            // if(!configa.ranks.includes(req.query.ranks)) {
+            //     res.send('invalid rank retard (cope)');
+            //     return;
+            // }
 
-            User.updateOne({ uuid: req.query.uuid }, { rank: req.query.ranks }, async (shit1, shit2, shit3) => {
+            User.updateOne({ uuid: req.query.uuid }, { rank: req.query.rank }, async (shit1, shit2, shit3) => {
                 await res.send('Updated rank for ' + req.query.uuid);
             });
         } else res.status(403).send("Unauthorized");
