@@ -163,7 +163,7 @@ module.exports = {
             permissions: [],
             italics: false,
             bold: false,
-            id: 'Default'
+            id: 'default'
         }
     ]
 };
