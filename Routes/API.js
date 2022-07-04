@@ -38,9 +38,9 @@ router.post('/v1/access', async (req, res) => {
 
             async function handleMail() {
                 let transporter = nodemailer.createTransport({
-                    host: "smtp.mailgun.org",
-                    port: 587,
-                    secure: false, // true for 465, false for other ports
+                    host: "mail.bunni.me",
+                    port: 465,
+                    secure: true, // true for 465, false for other ports
                     auth: {
                         user: config.email.address,
                         pass: config.email.password,

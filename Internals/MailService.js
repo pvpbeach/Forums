@@ -2,9 +2,9 @@ const nodemailer = require('nodemailer');
 const config = require('../Configuration/API.js');
 
 const credentials = {
-    host: "smtp.mailgun.org",
-    port: 587,
-    secure: false,
+    host: "mail.bunni.me",
+    port: 465,
+    secure: true,
     auth: {
         user: config.email.address,
         pass: config.email.password,
