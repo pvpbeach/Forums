@@ -1,6 +1,10 @@
 const mongoose = require('mongoose');
 
 const NewsSchema = mongoose.Schema({
+    id: {
+        type: String,
+        required: true
+    },
     title: {
         type: String,
         required: true
@@ -9,11 +13,19 @@ const NewsSchema = mongoose.Schema({
         type: String,
         required: true
     },
+    authorname: {
+        type: String,
+        required: true
+    },
     author: {
         type: String,
         required: true
     },
     date: {
+        type: Date,
+        default: Date.now
+    },
+    datee: {
         type: Date,
         default: Date.now
     },

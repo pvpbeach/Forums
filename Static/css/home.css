@@ -1,12 +1,12 @@
 /**
  * Home Page Stylesheet for Fynda.
- * Copyright (C) 2020 Hydrogen.
+ * Copyright (C) 2022 Almix LLC & The PvPBeach Network.
  */
 
- .header {
+.header {
     padding-top: 100px;
     padding-bottom: 100px;
-    background: url('/img/bg.png');
+    background: url('/img/bg-primary.png');
     background-position-y: -1px;
 }
 
@@ -15,4 +15,20 @@
     padding-bottom: 5px;
     background: rgb(37, 193, 255);
     text-align: center;
+}
+
+.hfooter {
+    background: rgb(35, 35, 35);
+    padding-top: 40px;
+    padding-bottom: 40px;
+}
+
+@media (max-width: 768px) {
+    .hfooter img {
+        display: none;
+        opacity: 0;
+    }
+    .hfooter {
+        text-align: center;
+    }
 }

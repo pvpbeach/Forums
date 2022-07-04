@@ -5,9 +5,9 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Replying to <%= author.username %>'s <%= config[ticket.type] %> &mdash; MineRIP Network</title>
+    <title>Replying to <%= author.username %>'s <%= config[ticket.type] %> &bull; PvPBeach Network</title>
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.2/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css">
     <link rel="stylesheet" href="/css/global.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="/css/flash.css" rel="stylesheet">
@@ -27,15 +27,15 @@
 <body onload="createEditors();" style="height: 100vh;">
 <%- include('../partials/Navbar.ejs') %>
 
-<div class="container content">
-    <h1 class="title is-1">Replying to <span style="color: #d506dc;"><%= author.username %>'s <%= config[ticket.type].name %></span></h1>
-    <small>If the user's name does not resolve in-game, check their name history. They may have changed their name without syncing</small>
+<div class="container content" style="color: #000 !important;">
+    <h1 class="title is-1" style="color: #fff;">Replying to <span style="color: #d506dc;"><%= author.username %>'s <%= config[ticket.type].name %></span></h1>
+    <small style="color: #fff;">If the user's name does not resolve in-game, check their name history. They may have changed their name without syncing</small>
     <hr>
-    <form method="POST" action="/support/reply/<%= ticket._id %>">
-        <textarea class="editorinstance" name="reason" id="reply"></textarea>
+    <form method="POST" action="/support/reply">
+        <textarea class="editorinstance" name="reply" id="reply"></textarea>
         <br>
 
-        <select class="input" name="tag">
+        <select class="input">
             <% for (var balls in config[ticket.type].replies) { %>
                 <option><%= config[ticket.type].replies[balls].name %></option>
             <% } %>
@@ -49,7 +49,7 @@
     </form>
 </div>
 
-<script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+<script defer src="https://use.fontawesome.com/releases/v6.1.1/js/all.js"></script>
 <script src="https://cdn.ckeditor.com/ckeditor5/24.0.0/classic/ckeditor.js"></script>
 
 </body>

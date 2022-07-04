@@ -3,8 +3,8 @@ const router = express.Router();
 const bcrypt = require('bcryptjs');
 const passport = require('passport');
 const User = require('../Models/User');
-const totpmod = require("node-2fa");
 const { forwardAuthenticated, ensureAuthenticated } = require('../Internals/AuthHelpers');
+const logger = require('../Internals/Logger');
 const config = require('../Configuration/API');
 
 router.get('/forgot', forwardAuthenticated, (req, res) => res.render('forgot', { req }));
@@ -122,57 +122,5 @@ router.post('/password', ensureAuthenticated, async (req, res) => {
         });
     } else res.send('bro wtf. ');
 });
-
-router.get("/2fa/generate", ensureAuthenticated, async (req, res) => {
-    let userObj = await User.findOne({ uuid: req.user.uuid });
-    const tfa = totpmod.generateSecret({ name: "MineRIP Website", account: userObj.uuid });
-    res.send({ status: 200, response: { qr: tfa.qr, secret: tfa.secret } });
-    return;
-});
-
-router.get("/2fa/validate", ensureAuthenticated, async (req, res) => {
-    let userObj = await User.findOne({ uuid: req.user.uuid });
-    console.log(userObj);
-    if (!userObj.twoFactor) return res.status(400).send({ status: 400, response: "2FA is not enabled for this account." }); 
-    if (!req.query.totpcode) return res.status(400).send({ status: 400, response: "No TOTP code provided" });
-    const tokenValidation = totpmod.verifyToken(userObj.twoFactor, req.query.totpcode, 1);
-    if (tokenValidation == null) return res.status(400).send({ status: 400, response: "Invalid TOTP code" });
-    if (tokenValidation.delta !== 0) return res.status(400).send({ status: 400, response: "Invalid TOTP code" });
-    res.status(200).send({ status: 200, response: "TOTP code is valid" });
-    return;
-});
-
-router.get("/2fa/save", ensureAuthenticated, async (req, res) => {
-    let userObj = await User.findOne({ uuid: req.user.uuid });
-    if (!req.query.secret) return res.status(400).send({ status: 400, response: "No secret provided" });
-    if (!req.query.totpcode) return res.status(400).send({ status: 400, response: "No TOTP code provided" });
-    if (!userObj.twoFactor) {
-        const tokenValidation = totpmod.verifyToken(req.query.secret, req.query.totpcode, 1);
-        if (tokenValidation == null) return res.status(400).send({ status: 400, response: "Invalid TOTP code" });
-        if (tokenValidation.delta !== 0) return res.status(400).send({ status: 400, response: "Invalid TOTP code" });
-        userObj.twoFactor = req.query.secret;
-
-        User.findOneAndUpdate({ uuid: req.user.uuid }, userObj, async (shit1, shit2, shit3) => {
-            return res.status(200).send({ status: 200, response: "TOTP code valid, saving.." });
-        });
-        return;
-    } else {
-        if (!req.query.oldtotpcode) return res.status(400).send({ status: 400, response: "No old TOTP code provided" });
-        const oldTokenValidation = totpmod.verifyToken(userObj.twoFactor.secret, req.query.oldtotpcode, 1);
-        if (oldTokenValidation == null) return res.status(400).send({ status: 400, response: "Invalid old TOTP code" });
-        if (oldTokenValidation.delta !== 0) return res.status(400).send({ status: 400, response: "Invalid old TOTP code" });
-        const tokenValidation = totpmod.verifyToken(req.query.secret, req.query.totpcode, 1);
-        if (tokenValidation == null) return res.status(400).send({ status: 400, response: "Invalid TOTP code" });
-        if (tokenValidation.delta !== 0) return res.status(400).send({ status: 400, response: "Invalid TOTP code" });
-        userObj.twoFactor = req.query.secret;
-
-        User.updateOne({ uuid: req.user.uuid }, userObj, async (shit1, shit2, shit3) => {
-            return res.status(200).send({ status: 200, response: "TOTP code valid, updating.." });
-        });
-        return;
-    };
-});
-
-
 
 module.exports = router;

@@ -7,7 +7,7 @@
 }
 
 .RED {
-    color: #AA0000 !important;
+    color: #FF5555 !important;
 }
 
 .CYAN {
@@ -15,23 +15,11 @@
 }
 
 .YELLOW {
-    color: #F6BE00 !important;
+    color: #FFFF55 !important;
 }
 
 .DARK_GREEN {
     color: #00AA00 !important;
-}
-
-.LIGHT_PURPLE {
-    color: #FF55FF !important;
-}
-
-.LIGHT_RED {
-    color: #FF5555 !important;
-}
-
-.DARK_PURPLE {
-    color: #AA00AA !important;
 }
 
 .true {
@@ -61,10 +49,20 @@
 
 .bg-CYAN {
     background: #00AAAA !important;
+    color: white !important;
 }
 
 .bg-YELLOW {
     background: #FFFF55 !important;
+}
+
+.bg-GOLD {
+    background: #FFAA00 !important;
+}
+
+.bg-GRAY {
+    color: white !important;
+    background: #555555 !important;
 }
 
 
@@ -82,13 +80,17 @@
     color: white !important;
 }
 
+.tcolor-GRAY {
+    color: white !important;
+}
 
 
 
 
 
 .staff-section {
-    padding: 0 0 15px
+    padding: 0 0 15px;
+    background-color: rgb(35, 35, 35);
 }
 
 .staff-section .block {
@@ -106,7 +108,7 @@
     font-size: 12px;
     color: #fff;
     text-align: center;
-    text-transform: uppercase;
+    /* text-transform: uppercase; */
     letter-spacing: 2px;
     text-shadow: 0 1px 1px rgba(0, 0, 0, .2);
     box-shadow: 0 0 1px 1px rgba(255, 255, 255, .32) inset, 0 -15px 15px rgba(0, 0, 0, .05) inset;

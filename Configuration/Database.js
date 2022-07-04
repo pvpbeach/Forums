@@ -1,3 +1,3 @@
 module.exports = {
-    uri: 'mongodb://45.41.241.70:27017/fynda?retryWrites=true&w=majority'
+    uri: 'mongodb://127.0.0.1:27017/fynda?retryWrites=true&w=majority'
 }

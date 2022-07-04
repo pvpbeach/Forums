@@ -2,7 +2,7 @@
  * Fynda - A modern Minecraft server ticket system
  * Created by Hydrogen using ExpressJS, MongoDB and other open-source technologies.
  *
- * Copyright (C) 2020 Hydrogen. All rights reserved.
+ * Copyright (C) 2022 Almix LLC & The PvPBeach Network. All rights reserved.
  * For more information on Copyright, view LICENSE.
  */
 
@@ -13,7 +13,6 @@ const flash = require('connect-flash');
 const session = require('express-session');
 const cors = require('cors');
 const logger = require('./Internals/Logger');
-const MongoStore = require('connect-mongo');
 
 const app = express();
 
@@ -24,8 +23,8 @@ require('./Internals/PassportManager')(passport);
 
 mongoose.connect(db.uri, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(async () => {
-        await logger.success('Connected to the database');
-    }).catch(async err => await logger.error('Failed to connect to the database:\n' + err));
+        await logger.success('[db] Connected to the database');
+    }).catch(async err => await logger.error('[db] Failed to connect to the database:\n' + err));
 
 app.set('view engine', 'ejs');
 app.use(express.static(`${__dirname}/Static`));
@@ -37,11 +36,7 @@ app.use(
     session({
         secret: 'SECRET',
         resave: true,
-        saveUninitialized: true,
-        store: new MongoStore({
-            mongoUrl: db.uri,
-            authSource: db.authSource
-        })
+        saveUninitialized: true
     })
 );
 
@@ -58,7 +53,9 @@ app.use(function(req, res, next) {
     next();
 });
 
-// ok
+process.on('uncaughtException', err => {
+  console.error(err && err.stack)
+});
 
 // app.use(async (req, res, next) => {
 //     //fetch name from UUID
@@ -101,6 +98,6 @@ app.use((req, res, next) => {
     res.type('txt').send('Not found');
 });
 
-app.listen(42500, async () => {
-    await logger.success('Web server started. Listening for connections on port 42500, bound to all IPs');
+app.listen(3000, async () => {
+    await logger.success('[serv] Web server started on thread MAIN. Listening for connections on port 3000, bound to all IPs');
 });

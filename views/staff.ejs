@@ -5,20 +5,22 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Staff &mdash; MineRIP Network</title>
-    <meta name="theme-color" content="#FFD700" />
-    <meta property="og:image" content="https://cdn.discordapp.com/attachments/871795400225480734/900590560853774346/logo_png_1.png">
-    <link rel="icon" type="image/png" sizes="1500x1500" href="https://cdn.discordapp.com/attachments/871795400225480734/900590560853774346/logo_png_1.png">
-    <meta name="title" content="MineRIP ┃ Staff">
-    <meta name="og:title" content="MineRIP ┃ Staff">
-    <meta name="twitter:title" content="MineRIP ┃ Staff">   
-    <meta name="description" content="The staff that allow us to keep running the Network." />
-    <meta property="og:description" content="The staff that allow us to keep running the Network." />
-    <meta property="twitter:description" content="The staff that allow us to keep running the Network." />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.2/css/bulma.min.css">
+    <title>Staff &bull; PvPBeach Network</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css">
     <link rel="stylesheet" href="/css/global.css">
     <link rel="stylesheet" href="/css/staff.css">
+
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!-- begin embed -->
+    <meta property="og:title" content="PvPBeach Network">
+    <meta property="og:description" content="Taking Practice to the next level">
+    <meta property="og:url"  content="https://pvpbeach.com">
+    <meta property="og:image" content="https://cdn.discordapp.com/attachments/949111822445846648/992245916260118608/Untitled2601121.png">
+    <meta name="theme-color" content="#D229CF">
+    <!-- end embed -->
+
     <link href="/css/flash.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.3/pace.min.js"></script>
 </head>
@@ -26,8 +28,8 @@
 <%- include('./partials/Navbar.ejs') %>
 
 <div class="container content" style="height: 100%;">
-    <h1 class="title is-1">Staff</h1>
-    <p class="subtitle">The people who keep the server running.</p>
+    <h1 class="title is-1" style="color: #fff;">Staff</h1>
+    <p class="subtitle" style="color: #f5f5f5;">Keeping the server running.</p>
     <hr>
     <ul>
     <% for (var index in staffRanks) { %>
@@ -40,7 +42,7 @@
                 <% for (var user in users) { %>
                     <% if (users[user].rank == staffRanks[index].id) { %>
                     <div class="column">
-                        <img draggable="false" style="width: 65px;" src="https://visage.surgeplay.com/full/<%= users[user].uuid %>" alt="shit">
+                        <img style="width: 156px; height: 256px;" src="https://visage.surgeplay.com/full/<%= users[user].uuid %>?overlay=true" alt="shit">
                         <br> <a class="<%= staffRanks[index].color %> <%= staffRanks[index].italics %>" href="/profile/<%= users[user].username %>"><%= users[user].username %></a>
                     </div>
                     <% } %>
@@ -54,10 +56,6 @@
 <br>
 
 <script defer src="/js/ModalHelper.js"></script>
-<script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
-<!-- ## yuri -->
-
-<%- include('./partials/Footer.ejs') %>
-
+<script defer src="https://use.fontawesome.com/releases/v6.1.1/js/all.js"></script>
 </body>
 </html>

@@ -11,7 +11,7 @@ module.exports = {
             // {
             //     label: 'Please',
             //     type: 'RichText',
-            //     placeholder: 'https://mine.rip/profile/[ign]',
+            //     placeholder: 'https://pvpbeach.com/profile/[ign]',
             // },
             {
                 label: 'What is your Discord ID?',
@@ -40,14 +40,14 @@ module.exports = {
                 placeholder: 'Let us know of any staff members that can vouch for you, as that can help in the interview process.',
             },
             {
-                label: 'What made you decide to apply for MineRIP',
+                label: 'What made you decide to apply for PvPBeach',
                 type: 'ShortText',
-                placeholder: 'Please describe why you want to work for MineRIP and how you can contribute to the server.'
+                placeholder: 'Please describe why you want to work for PvPBeach and how you can contribute to the server.'
             },
             {
                 label: 'What skills do you have that you think will benefit our team? What can you bring to the table?',
                 type: 'ShortText',
-                placeholder: 'Please list what skills you can bring to MineRIP.',
+                placeholder: 'Please list what skills you can bring to PvPBeach.',
             },
             {
                 label: 'Anything else you would like to mention?',

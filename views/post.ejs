@@ -5,19 +5,19 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title><%= post.title %> &mdash; MineRIP Network</title>
-    <meta name="theme-color" content="#FFD700" />
-    <meta property="og:image" content="https://cdn.discordapp.com/attachments/871795400225480734/900590560853774346/logo_png_1.png">
-    <link rel="icon" type="image/png" sizes="1500x1500" href="https://cdn.discordapp.com/attachments/871795400225480734/900590560853774346/logo_png_1.png">
-    <meta name="title" content="MineRIP Official Forums">
-    <meta name="og:title" content="MineRIP Official Forums">
-    <meta name="twitter:title" content="MineRIP Official Forums">   
-    <meta name="description" content="The official website of the MineRIP Network." />
-    <meta property="og:description" content="The official website of the MineRIP Network." />
-    <meta property="twitter:description" content="The official website of the MineRIP Network." />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.2/css/bulma.min.css">
+    <title><%= post.title %> &bull; PvPBeach Network</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css">
     <link rel="stylesheet" href="/css/global.css">
     <link rel="stylesheet" href="/css/staff.css">
+
+    <!-- begin embed -->
+    <meta property="og:title" content="PvPBeach Network">
+    <meta property="og:description" content="Taking Practice to the next level">
+    <meta property="og:url"  content="https://pvpbeach.com">
+    <meta property="og:image" content="https://cdn.discordapp.com/attachments/949111822445846648/992245916260118608/Untitled2601121.png">
+    <meta name="theme-color" content="#D229CF">
+    <!-- end embed -->
 
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
@@ -30,24 +30,24 @@
 <div class="container content">
     <div class="columns">
         <div class="column is-1 has-text-centered">
-            <img draggable="false" style="width: 50px;" src="https://visage.surgeplay.com/bust/512/<%= post.author %>" alt="shit">
+            <img style="width: 50px;" src="https://crafatar.com/renders/body/<%= post.author %>?overlay=true" alt="shit">
         </div>
-        <div class="column is-11">
+        <div class="column is-11 news">
             <% if (!req.isAuthenticated()) { %>
-            <h1 class="title is-2"><%= post.title %> <a style="color: lightgray; font-size: 20pt;"><i class="fas fa-arrow-up"></i> <span id="<%= post._id %>-upvote"><%= post.likes.length %></span></a></h1>
+            <h1 class="title is-2" style="color: #fff;"><%= post.title %> <a style="color: lightgray; font-size: 20pt;"><i class="fas fa-thumbs-up"></i> <span id="<%= post._id %>-upvote" style="color: #fff;"><%= post.likes.length %></span></a></h1>
             <% } else { %>
-            <h1 class="title is-2"><%= post.title %> <a onclick="like('<%= post.id %>')" id="<%= post.id %>-upvoteparent" style="color: <%= post.likes.includes(req.user.uuid) ? 'green' : 'lightgray' %>; font-size: 20pt;"><i class="fas fa-arrow-up"></i> <span id="<%= post._id %>-upvote"><%= post.likes.length %></span></a></h1>
+            <h1 class="title is-2" style="color: #fff;"><%= post.title %> <a onclick="like('<%= post.id %>')" id="<%= post.id %>-upvoteparent" style="color: <%= post.likes.includes(req.user.uuid) ? 'green' : 'lightgray' %>; font-size: 20pt;"><i class="fas fa-thumbs-up"></i> <span id="<%= post._id %>-upvote" style="color: #fff;"><%= post.likes.length %></span></a></h1>
             <% } %>
-            <p class="subtitle">written <span data-tooltip="<%= moment(post.date).format('Do of MMMM YYYY'); %>"><%= moment(post.date).fromNow() %></span> by <span class="<%= ranks.ranks.find(r => r.id === user.rank).color %>"><%= user.username %></span></p>
+            <p class="subtitle" style="color: #fff;">written <span data-tooltip="<%= moment(post.datee).format('Do of MMMM YYYY'); %>"><%= moment(post.datee).fromNow() %></span> by <span class="<%= ranks.ranks.find(r => r.id === user.rank).color %>"><%= user.username %></span></p>
             <hr>
             <%- post.body %>
         </div>
     </div>
     <br>
-    <p class="subtitle">Replies are <strong>coming soon</strong>.</p>
+    <p class="subtitle" style="color: #fff;">Replies are <strong style="color: #fff;">coming soon</strong>.</p>
 </div>
 
-<script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+<script defer src="https://use.fontawesome.com/releases/v6.1.1/js/all.js"></script>
 <script src="/js/PostHelper.js"></script>
 </body>
 </html>

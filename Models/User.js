@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const UserSchema = mongoose.Schema({
     username: {
         type: String,
-        required: true
+        required: true,
     },
     email: {
         type: String,
@@ -25,10 +25,6 @@ const UserSchema = mongoose.Schema({
         type: String,
         default: "Default"
     },
-    twoFactor: {
-        type: String,
-        default: null
-    },
     maintainer: {
         type: Boolean,
         default: false
@@ -44,6 +40,10 @@ const UserSchema = mongoose.Schema({
     connections: {
         type: Array,
         default: []
+    },
+    bio: {
+        type: String,
+        default: 'No bio set.'
     },
     online: {
         type: Boolean,

@@ -13,7 +13,7 @@ command /register [<text>]:
                     set {postrequest} to "http://149.56.122.80:425/api/v1/access?auth=ngmCGP6NC56rkREJ&useremail=%arg-1%&user=%executor%&id=%player's uuid%"
                     send a "post" request to "%{postrequest}%" with the headers "User-Agent: curl/7.72.0"
                     #set {_response} to the last http response
-                    message "<green>Success! You've successsfully registered. Check your email! If it's not on your inbox, check the Spam/Junk folder."
+                    message "<green>Success! You've successsfully registered. Check your email! If it's not on your inbox, check the Spam/Junk PvPBeacher."
                 else:
                     message "<red>This doesn't seem to be a valid email address. If your email is valid, please open a ticket."
                     stop

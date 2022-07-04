@@ -10,20 +10,22 @@ const Ticket = require('../Models/Ticket');
 
 router.get('/', ensureAuthenticated, async (req, res) => {
     Ticket.find({ author: req.user.uuid }).then(async tickets => {
-        await res.render('tickets/main', { moment, req, config, tickets });
+        await res.render('tickets/main', { getResponded, moment, req, config, tickets });
     });
 });
+
+function getResponded(ticketID) {
+    Ticket.findOne({ _id: ticketID }).then(ticket => {
+       if (!ticket.reply) return 'N/A';
+       return moment(ticket.reply.date).fromNow();
+    });
+}
 
 router.get('/create', ensureAuthenticated, async (req, res) => {
     await res.render('tickets/cats', { req, config });
 });
 
 router.get('/create/:id', ensureAuthenticated, async (req, res) => {
-    if (!Object.keys(config).includes(req.params.id)) {
-        res.render('404', { req });
-        return;
-    }
-
     await res.render('tickets/create', { req, config });
 });
 
@@ -53,6 +55,8 @@ router.post('/create/:id', ensureAuthenticated, async (req, res) => {
         .catch(async ignored => res.send('This process failed. Please contact an Administrator!'))
 });
 
+
+
 router.get('/:id', ensureAuthenticated, async (req, res) => {
     const exists = await Ticket.exists({ _id: req.params.id });
     if (exists) {
@@ -60,19 +64,8 @@ router.get('/:id', ensureAuthenticated, async (req, res) => {
             let rank = rankcfg.ranks.find(r => r.id === req.user.rank);
 
             if (req.user.uuid === ticket.author || rank.permissions.includes('TICKETS_MODERATE')|| rank.permissions.includes('*')) {
-                User.findOne({ uuid: ticket.author }).then(async user => {
-                    let replyObj = {};
-
-                    if (ticket.reply && Object.keys(ticket.reply).length !== 0) {
-                        let ticketAuthor = await User.findOne({ uuid: ticket.reply.replied });
-                        replyObj = {
-                            replied: ticketAuthor,
-                            body: ticket.reply.body,
-                            tag: ticket.reply.tag
-                        };
-                    }
-
-                    res.render('tickets/ticket', { rankcfg, moment, config, ticket, req, user, replyObj });
+                User.findOne({ uuid: ticket.author }).then(user => {
+                    res.render('tickets/ticket', { rankcfg, moment, config, ticket, req, user });
                 });
             } else res.render('403', { req });
         });
@@ -81,10 +74,9 @@ router.get('/:id', ensureAuthenticated, async (req, res) => {
 
 router.get('/delete/:id', ensureAuthenticated, async (req, res) => {
     const exists = await Ticket.exists({ _id: req.params.id });
-    let rank = rankcfg.ranks.find(r => r.id=== req.user.rank);
     if (exists) {
         Ticket.findOne({ _id: req.params.id }).then(ticket => {
-            if (req.user.uuid === ticket.author || rank.permissions.includes("TICKETS_MODERATE")) {
+            if (req.user.uuid === ticket.author) {
                 ticket.delete();
                 res.redirect('/support');
             } else res.render('403', { req });
@@ -95,42 +87,13 @@ router.get('/delete/:id', ensureAuthenticated, async (req, res) => {
 router.get('/reply/:id', ensureAuthenticated, async (req, res) => {
     const exists = await Ticket.exists({ _id: req.params.id });
     if (exists) {
-        Ticket.findOne({ _id: req.params.id }).then(async ticket => {
+        Ticket.findOne({ _id: req.params.id }).then(ticket => {
             let rank = rankcfg.ranks.find(r => r.id === req.user.rank);
 
             if (rank.permissions.includes('TICKETS_ADMIN') || rank.permissions.includes('TICKETS_MODERATE') || rank.permissions.includes('*')) {
-                let author = await User.findOne({ uuid: ticket.author });
-
-                await res.render('tickets/reply', { req, config, rankcfg, ticket, author });
-
-            } else res.render('403', { req });
-        });
-    } else res.render('404', { req });
-});
-
-router.post('/reply/:id', ensureAuthenticated, async (req, res) => {
-    const exists = await Ticket.exists({ _id: req.params.id });
-    if (exists) {
-        Ticket.findOne({ _id: req.params.id }).then(async ticket => {
-            let rank = rankcfg.ranks.find(r => r.id === req.user.rank);
-
-            if (rank.permissions.includes('TICKETS_ADMIN') || rank.permissions.includes('TICKETS_MODERATE') || rank.permissions.includes('*')) {
-                const { reason, tag } = req.body;
-                if (!reason || !tag) {
-                    res.send('Please fill out all fields.');
-                    return;
-                }
-
-                ticket.status = "responded";
-                ticket.reply = {
-                    replied: req.user.uuid,
-                    date: Date.now(),
-                    body: reason,
-                    tag
-                };
-                ticket.save();
-
-                res.redirect('/support/' + ticket._id);
+                User.findOne({ uuid: ticket.author }).then(async author => {
+                    await res.render('tickets/reply', { req, config, rankcfg, ticket, author });
+                });
             } else res.render('403', { req });
         });
     } else res.render('404', { req });

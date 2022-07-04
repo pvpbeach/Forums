@@ -26,7 +26,7 @@ module.exports = {
             async function handle() {
                 let transporter = nodemailer.createTransport(credentials);
                 let info = transporter.sendMail({
-                    from: `"MineRIP Network" <${config.email.address}>`,
+                    from: `"PvPBeach Network" <${config.email.address}>`,
                     to: recipient,
                     subject,
                     text: short,

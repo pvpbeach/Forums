@@ -5,9 +5,9 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Tickets &mdash; MineRIP Network</title>
+    <title>Tickets &bull; PvPBeach Network</title>
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.2/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css">
     <link rel="stylesheet" href="/css/global.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
@@ -18,37 +18,25 @@
 <%- include('../partials/Navbar.ejs') %>
 
 <div class="container content">
-    <h1 class="title is-1">My Tickets <span><a href="/support/create" class="button is-rounded is-success">Create</a></span></h1>
+    <h1 class="title is-1" style="color: #fff;">My Tickets <span><a href="/support/create" class="button is-small is-success">Create</a></span></h1>
     <table class="table">
         <thead>
-        <tr>
-            <th><abbr title="Position">#</abbr></th>
-            <th><abbr title="Nig">Title</abbr></th>
-            <th><abbr title="Played">Created</abbr></th>
-            <th><abbr title="Won">Responded</abbr></th>
-            <th><abbr title="Drawn">Status</abbr></th>
+        <tr style="background-color: rgb(35, 35, 35);">
+            <th><abbr title="Position" style="color: #fff;">#</abbr></th>
+            <th><abbr title="Nig" style="color: #fff;">Title</abbr></th>
+            <th><abbr title="Played" style="color: #fff;">Created</abbr></th>
+            <th><abbr title="Won" style="color: #fff;">Responded</abbr></th>
+            <th><abbr title="Drawn" style="color: #fff;">Status</abbr></th>
         </tr>
         </thead>
         <tbody>
             <% for (var index in tickets) { %>
             <tr>
-                <th><a href="/support/<%= tickets[index]._id %>"><i class="fas fa-eye"></i></a></th>
-                <td><%= tickets[index].title %></td>
+                <th><a href="/support/<%= tickets[index]._id %>" class="button is-small is-link"><i class="fas fa-eye"></i></a></th>
+                <td style="color: #fff;"><%= tickets[index].title %></td>
                 <td><span data-tooltip="<%= moment(tickets[index].date).format('Do of MMMM YYYY, HH:ss A'); %>"><%= moment(tickets[index].date).fromNow() %></span></td>
-                <td>
-                    <% if (tickets[index].reply && Object.keys(tickets[index].reply).length !== 0 && !tickets[index].reply['_']) { %>
-                        <span data-tooltip="<%= moment(tickets[index].reply.date).format('Do of MMMM YYYY, HH:ss A'); %>"><%= moment(tickets[index].reply.date).fromNow() %></span>
-                    <% } else { %>
-                        N/A
-                    <% } %>
-                </td>
-                <td>
-                    <% if (tickets[index].reply && Object.keys(tickets[index].reply).length !== 0 && !tickets[index].reply['_']) { %>
-                        <span class="tag"><%= tickets[index].reply.tag %></span>
-                    <% } else { %>
-                        Open
-                    <% } %>
-                </td>
+                <td style="color: #fff;"><%= getResponded(tickets[index]._id) %></td>
+                <td><span class="tag is-success">Resolved</span></td>
             </tr>
 
             <% } %>
@@ -56,6 +44,6 @@
     </table>
 </div>
 
-<script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+<script defer src="https://use.fontawesome.com/releases/v6.1.1/js/all.js"></script>
 </body>
 </html>
