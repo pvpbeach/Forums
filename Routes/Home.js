@@ -64,6 +64,11 @@ router.get('/privacy', async (req, res) => {
    res.render('legal/privacy');
 });
 
+router.get('/terms', async (req, res) => {
+    res.render('legal/terms', { req });
+ });
+
+ 
 
 
 // data shit
