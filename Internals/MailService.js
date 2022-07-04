@@ -2,7 +2,7 @@ const nodemailer = require('nodemailer');
 const config = require('../Configuration/API.js');
 
 const credentials = {
-    host: "mx.dannington.systems",
+    host: "smtp.mailgun.org",
     port: 587,
     secure: false,
     auth: {
