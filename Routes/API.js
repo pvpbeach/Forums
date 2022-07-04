@@ -7,9 +7,11 @@ const CUser = require('../Models/ClientUser');
 const User = require('../Models/User');
 const News = require('../Models/News');
 const { ensureAuthenticated } = require('../Internals/AuthHelpers');
+const configa = require('../Configuration/Ranks');
+
 
 router.get('/v1/', async (req, res) => {
-    res.send("This is the v1 API root. For API documentation, please refer to the \"docs\" PvPBeacher.");
+    res.send("This is the v1 API root. For API documentation, please refer to the \"docs\"folder.");
 });
 
 router.get('/v1/autocomplete', async (req, res) => {
@@ -82,6 +84,8 @@ router.post('/v1/userExist', async (req, res) => {
     } else res.status(400).send('Missing required query parameters.');
 });
 
+
+
 router.post('/v1/emailExist', async (req, res) => {
     if (req.query.auth && req.query.email) {
         if (req.query.auth === config.apiKey) { // correct API key, continue
@@ -99,6 +103,28 @@ router.post('/v1/updateLogin', async (req, res) => {
 
             User.updateOne({ uuid: req.query.uuid }, { lastLogin: Date.now() }, async (shit1, shit2, shit3) => {
                 await res.send('pxgchamp');
+            });
+        } else res.status(403).send("Unauthorized");
+    } else res.status(400).send('Missing required query parameters.');
+});
+
+//top of code dumbass
+
+
+//just fucked your mother!
+router.post('/v1/updaterank', async (req, res) => {
+    if (req.query.auth && req.query.uuid) {
+        if (req.query.auth === config.apiKey) {
+            const exists = await User.exists({ uuid: req.query.uuid });
+            if (!exists) { res.send('invalid'); return; }
+
+            if(!configa.rank.includes(req.query.rank)) {
+                res.send('invalid rank retard (cope)');
+                return;
+            }
+
+            User.updateOne({ uuid: req.query.uuid }, { rank: req.query.rank }, async (shit1, shit2, shit3) => {
+                await res.send('Updated rank for ' + req.query.uuid);
             });
         } else res.status(403).send("Unauthorized");
     } else res.status(400).send('Missing required query parameters.');

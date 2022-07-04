@@ -16,6 +16,38 @@ router.get('/', ensureAuthenticated, async (req, res) => {
     } else await res.render('403', {req})
 });
 
+router.get('/tickets', ensureAuthenticated, async (req, res) => {
+    if (req.rankData.permissions.includes('STAFF')|| req.rankData.permissions.includes('*')) {
+        const tickets = await Ticket.find({ status: "open" }).sort({ date: -1 });
+        let rankData = req.rankData;
+        await res.render('panel/tickets', { req, rankData, tickets, ticketcfg });
+    } else await res.render('403', { req });
+});
+
+router.get('/news', ensureAuthenticated, async (req, res) => {
+
+    if (req.rankData.permissions.includes('*')) {
+        let rankData = req.rankData;
+        await res.render('panel/news', { req, rankData });
+    } else await res.render('403', { req });
+});
+
+router.post('/news', ensureAuthenticated, async (req, res) => {
+
+    if (req.rankData.permissions.includes('*')) {
+        const { title, body } = req.body;
+        if (!title || !body) return res.sendStatus(400);
+
+        const news = new News({ title, body, author: req.user.uuid });
+        news.save().then(async () => {
+            await res.redirect('/post/' + news._id);
+        }).catch(async err => {
+            console.error(err);
+            res.send('error occurred oopsie poopsie (idk how check console)');
+        });
+    } else await res.render('403', { req });
+});
+
 router.get('/exec', ensureAuthenticated, async (req, res) => {
     let rank = rankcfg.ranks.find(r => r.id === req.user.rank);
 
