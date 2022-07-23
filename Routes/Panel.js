@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const rankcfg = require('../Configuration/Ranks');
+const Ticket = require('../Models/Ticket');
+const ticketcfg = require('../Configuration/Tickets');
 const moment = require('moment');
 const { ensureAuthenticated } = require('../Internals/AuthHelpers');
 const process = require('process');
@@ -12,12 +14,17 @@ router.get('/', ensureAuthenticated, async (req, res) => {
     let rank = rankcfg.ranks.find(r => r.id === req.user.rank);
 
     if (rank.permissions.includes('STAFF')|| rank.permissions.includes('*')) {
-        await res.render('panel/index', { req, rank });
+        let rankData = req.rankData;
+
+        await res.render('panel/index', { req, rankData });
     } else await res.render('403', {req})
 });
 
 router.get('/tickets', ensureAuthenticated, async (req, res) => {
-    if (req.rankData.permissions.includes('STAFF')|| req.rankData.permissions.includes('*')) {
+    let rank = rankcfg.ranks.find(r => r.id === req.user.rank);
+
+    if (rank.permissions.includes('STAFF')|| rank.permissions.includes('*')) {
+        // Define Ticket
         const tickets = await Ticket.find({ status: "open" }).sort({ date: -1 });
         let rankData = req.rankData;
         await res.render('panel/tickets', { req, rankData, tickets, ticketcfg });
@@ -25,16 +32,18 @@ router.get('/tickets', ensureAuthenticated, async (req, res) => {
 });
 
 router.get('/news', ensureAuthenticated, async (req, res) => {
-
-    if (req.rankData.permissions.includes('*')) {
+    let rank = rankcfg.ranks.find(r => r.id === req.user.rank);
+    
+    if (rank.permissions.includes('*')) {
         let rankData = req.rankData;
         await res.render('panel/news', { req, rankData });
     } else await res.render('403', { req });
 });
 
 router.post('/news', ensureAuthenticated, async (req, res) => {
+    let rank = rankcfg.ranks.find(r => r.id === req.user.rank);
 
-    if (req.rankData.permissions.includes('*')) {
+    if (rank.permissions.includes('*')) {
         const { title, body } = req.body;
         if (!title || !body) return res.sendStatus(400);
 
