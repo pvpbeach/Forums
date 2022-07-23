@@ -42,7 +42,9 @@
 
 
 
-
+.bg-DARK_PURPLE {
+    color: #AA00AA !important;
+}
 
 .bg-DARK_RED {
     background: #aa0000 !important;
@@ -84,6 +86,10 @@
     color: white !important;
 }
 
+
+.tcolor-DARK_PURPLE {
+    color: #AA00AA !important;
+}
 .tcolor-BLUE {
     color: white !important;
 
