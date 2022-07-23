@@ -7,7 +7,7 @@
 }
 
 .RED {
-    color: #FF5555 !important;
+    color: #AA0000 !important;
 }
 
 .CYAN {
@@ -15,12 +15,25 @@
 }
 
 .YELLOW {
-    color: #FFFF55 !important;
+    color: #F6BE00 !important;
 }
 
 .DARK_GREEN {
     color: #00AA00 !important;
 }
+
+.LIGHT_PURPLE {
+    color: #FF55FF !important;
+}
+
+.LIGHT_RED {
+    color: #FF5555 !important;
+}
+
+.DARK_PURPLE {
+    color: #AA00AA !important;
+}
+
 
 .true {
     font-style: italic !important;
