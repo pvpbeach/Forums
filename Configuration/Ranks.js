@@ -15,7 +15,7 @@ module.exports = {
             permissions: ['*'],
             italics: true,
             bold: true,
-            id: 'platadmin'
+            id: 'platformadmin'
         },
         {
             name: 'Developer',
